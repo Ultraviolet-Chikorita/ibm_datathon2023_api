@@ -1,3 +1,4 @@
 spacy
 spacy_transformers
 flask
+Gunicorn
