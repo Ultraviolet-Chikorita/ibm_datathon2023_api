@@ -5,7 +5,6 @@ from flask import request
 import json
 import spacy
 import spacy_transformers
-import en_core_web_sm
 
 
 app = Flask(__name__)
@@ -13,7 +12,7 @@ app = Flask(__name__)
 @app.route('/', methods=['GET', 'POST'])
 def handle_request():
     corpus_clean = str(request.args.get('corpus_clean'))
-    nlp = en_core_web_sm.load()
+    nlp = spacy.load("en_core_web_trf")
     nlp.max_length = 5000000
     corpus_parsed = nlp(corpus_clean)
     corpus_normalized = [token.lemma_ for token in corpus_parsed]
