@@ -1,4 +1,4 @@
 spacy
 spacy_transformers
-flask
+Flask
 Gunicorn
