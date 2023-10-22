@@ -2,3 +2,4 @@ spacy
 spacy_transformers
 Flask
 Gunicorn
+typing_extensions==4.7.1
