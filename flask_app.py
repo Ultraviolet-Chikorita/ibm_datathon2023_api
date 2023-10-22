@@ -4,6 +4,7 @@ from flask import Flask
 from flask import request
 import json
 import spacy
+import spacy_transformers
 
 app = Flask(__name__)
 
