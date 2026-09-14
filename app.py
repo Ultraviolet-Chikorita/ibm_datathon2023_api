@@ -1,19 +1,24 @@
-# A very simple Flask Hello World app for you to get started with...
+import os
 
-from flask import Flask
-from flask import request
-import json
 import spacy
-import spacy_transformers
-
+from flask import Flask, jsonify, request
 
 app = Flask(__name__)
 
-@app.route('/', methods=['GET', 'POST'])
-def handle_request():
-    corpus_clean = str(request.args.get('corpus_clean'))
-    nlp = spacy.load("en_core_web_trf")
-    nlp.max_length = 5000000
-    corpus_parsed = nlp(corpus_clean)
-    corpus_normalized = [token.lemma_ for token in corpus_parsed]
-    return json.dumps({'corpus_normalized': corpus_normalized})
+SPACY_MODEL = os.getenv("SPACY_MODEL", "en_core_web_sm")
+nlp = spacy.load(SPACY_MODEL)
+nlp.max_length = int(os.getenv("SPACY_MAX_LENGTH", "5000000"))
+
+
+@app.route("/", methods=["GET", "POST"])
+def normalize_corpus():
+    """Lemmatize a supplied corpus for the original datathon pipeline."""
+    corpus = request.values.get("corpus_clean")
+    if corpus is None:
+        return jsonify({"error": "missing required parameter: corpus_clean"}), 400
+
+    if len(corpus) > nlp.max_length:
+        return jsonify({"error": "corpus exceeds configured maximum length"}), 413
+
+    parsed = nlp(corpus)
+    return jsonify({"corpus_normalized": [token.lemma_ for token in parsed]})
