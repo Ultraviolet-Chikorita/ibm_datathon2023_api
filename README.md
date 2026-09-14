@@ -2,7 +2,7 @@
 
 A small Flask service created as supporting infrastructure for the 2023 IBM datathon work. It accepts a text corpus and returns spaCy lemmas for downstream analysis.
 
-> **Portfolio status:** historical datathon utility, not a standalone portfolio project. The associated analysis/submission lives in the separate `ibm_datathon_2023_submission` repository.
+> **Repository status:** historical datathon utility. The associated analysis/submission lives in the separate `ibm_datathon_2023_submission` repository.
 
 ## API
 
@@ -31,4 +31,4 @@ The response is JSON containing `corpus_normalized`, a list of lemmas.
 - `SPACY_MAX_LENGTH` controls the maximum accepted corpus length.
 - Missing input returns HTTP 400; oversized input returns HTTP 413.
 
-The service is intentionally tiny and exists to document one component of the original datathon pipeline rather than to serve as a general NLP API.
+The service is intentionally small and documents one component of the original datathon pipeline rather than acting as a general-purpose NLP API.
